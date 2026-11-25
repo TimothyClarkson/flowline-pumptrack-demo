@@ -226,6 +226,16 @@ h1 em,h2 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-sp
 .art-4{background-image:url(assets/plains.jpg);background-position:center 60%}
 .g-item{background:#dfe3dc}
 
+/* services */
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc{position:relative;background:#fff;border-radius:22px;padding:30px 26px 26px;box-shadow:0 0 0 1px #0f1a170d;display:flex;flex-direction:column;transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .4s}
+.svc:hover{transform:translateY(-5px);box-shadow:0 30px 60px -30px #0f1a1740,0 0 0 1px #0f1a170d}
+.svc-n{font-family:var(--serif);font-size:30px;color:#c7ccc8;line-height:1;margin-bottom:22px;transition:color .3s}
+.svc:hover .svc-n{color:var(--accent-2)}
+.svc h3{font-size:20px;margin-bottom:10px;line-height:1.15}
+.svc p{margin:0 0 20px;color:var(--ink-2);font-size:15px;flex:1}
+.svc-link{font-weight:600;font-size:14px;text-decoration:none;border-bottom:1.5px solid var(--accent-2);align-self:flex-start;padding-bottom:2px}
+
 /* faq */
 .faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:start}
 .faq-grid .section-head{position:sticky;top:110px}
@@ -256,6 +266,7 @@ h1 em,h2 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-sp
 
 /* responsive */
 @media (max-width:1080px){
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
   .hero-card{position:relative;right:auto;top:auto;width:min(480px,100%);margin:56px 24px 0;justify-self:center;transform:none}
   .est-shell{grid-template-columns:1fr}
   .est-map-wrap{min-height:520px}
@@ -268,6 +279,7 @@ h1 em,h2 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-sp
   .nav-toggle{display:flex;margin-left:8px}
   .nav>.btn{margin-left:auto}
   .why-grid,.surface-grid,.gallery{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr 1fr}
   .g-wide{grid-column:auto;aspect-ratio:4/3}
   .book-grid,.faq-grid{grid-template-columns:1fr;gap:40px}
   .faq-grid .section-head{position:static}
@@ -284,6 +296,7 @@ h1 em,h2 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-sp
   .hero{padding:70px 0 80px}
   .hero-stats{gap:26px}.hero-stats dt{font-size:30px}
   .row2,.row3{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr}
   .book-form{padding:24px}
   .est-map-wrap{min-height:480px}
   .addr{top:12px;left:12px;right:12px}
