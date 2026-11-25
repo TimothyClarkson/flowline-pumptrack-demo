@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css">
+<link rel="preload" as="image" href="assets/media/hero-poster.webp">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -30,9 +31,13 @@
 
 <main id="top">
 <!-- HERO -->
-<section class="hero">
+<section class="hero hero-video">
   <div class="hero-bg" aria-hidden="true">
-    <div class="blob b1"></div><div class="blob b2"></div><div class="grain"></div>
+    <video class="hero-vid" id="heroVid" muted loop playsinline preload="metadata" poster="assets/media/hero-poster.webp" data-autoplay>
+      <source src="assets/media/hero.webm" type="video/webm">
+      <source src="assets/media/hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div><div class="grain"></div>
     <svg class="hero-lines" viewBox="0 0 1200 600" preserveAspectRatio="none"><path d="M-20 420 C 150 420, 200 260, 340 260 S 520 420, 660 420 S 860 260, 1000 260 S 1150 380, 1240 380" /><path d="M-20 470 C 150 470, 200 310, 340 310 S 520 470, 660 470 S 860 310, 1000 310 S 1150 430, 1240 430" /></svg>
   </div>
   <div class="container hero-inner">
@@ -44,11 +49,13 @@
       <a href="#how" class="btn btn-ghost">How we work</a>
     </div>
     <dl class="hero-stats reveal">
-      <div><dt>4–10 wks</dt><dd>typical build on site</dd></div>
+      <div><dt>4–<span data-count="10">10</span> wks</dt><dd>typical build on site</dd></div>
       <div><dt>All ages</dt><dd>balance bikes to BMX</dd></div>
-      <div><dt>25+ yrs</dt><dd>design life, sealed surfaces</dd></div>
+      <div><dt><span data-count="25">25</span>+ yrs</dt><dd>design life, sealed surfaces</dd></div>
     </dl>
   </div>
+  <button class="vid-toggle" id="vidToggle" type="button" aria-label="Pause background video"><span class="i-pause">❚❚</span><span class="i-play">▶</span></button>
+  <span class="media-note">AI-generated demo footage</span>
   <div class="hero-card reveal" aria-hidden="true">
     <svg viewBox="0 0 420 300" class="hero-illus">
       <defs>
@@ -78,6 +85,7 @@
 
 <!-- WHY -->
 <section class="section" id="why">
+  <svg class="scroll-line" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M-40 120 C 220 120, 260 380, 520 380 S 820 140, 1040 220 S 1300 640, 1480 560"/></svg>
   <div class="container">
     <div class="section-head reveal">
       <p class="eyebrow">Why pump tracks</p>
@@ -105,14 +113,14 @@
       <p class="sub">One team for the whole journey — from the first concept design for a council report to the last sweep of a finished track.</p>
     </div>
     <div class="svc-grid">
-      <article class="svc reveal"><span class="svc-n">01</span><h3>Pump track design &amp; construction</h3><p>Turnkey asphalt and concrete pump tracks, designed for your site and built by our own crew — earthworks, shaping, drainage and sealing.</p><a href="#estimate" class="svc-link">Estimate a track →</a></article>
-      <article class="svc reveal"><span class="svc-n">02</span><h3>Concept designs &amp; 3D renders</h3><p>2D layouts, 3D concept designs and flythroughs that bring your idea to life when presenting to council, land owners, boards and funders.</p><a href="#book" class="svc-link">Request a concept →</a></article>
-      <article class="svc reveal"><span class="svc-n">03</span><h3>Modular &amp; relocatable pump tracks</h3><p>Composite modular pump tracks to buy or hire. Portable, expandable and quick to install — move it between neighbourhoods, schools or events.</p><a href="#surfaces" class="svc-link">Compare surfaces →</a></article>
-      <article class="svc reveal"><span class="svc-n">04</span><h3>Bike parks &amp; MTB trails</h3><p>Bike park design and mountain bike trail building, from flowing singletrack to full bike park masterplans that fit the landscape.</p><a href="#book" class="svc-link">Talk trails →</a></article>
-      <article class="svc reveal"><span class="svc-n">05</span><h3>Dirt jumps &amp; jump lines</h3><p>Hand-shaped dirt jumps and progressive jump lines with clear start points and safe run-outs, built to suit local riders and clubs.</p><a href="#book" class="svc-link">Plan a jump line →</a></article>
-      <article class="svc reveal"><span class="svc-n">06</span><h3>Bikes in Schools &amp; skills tracks</h3><p>School bike tracks, learn-to-ride loops and skills parks that fit Bikes in Schools programmes, playground spaces and PE lessons.</p><a href="#book" class="svc-link">Plan a school track →</a></article>
-      <article class="svc reveal"><span class="svc-n">07</span><h3>Consultation &amp; funding support</h3><p>Community and student consultation, council reports, drawings and cost breakdowns that make funding applications easier to win.</p><a href="#faq" class="svc-link">See FAQ →</a></article>
-      <article class="svc reveal"><span class="svc-n">08</span><h3>Maintenance &amp; resurfacing</h3><p>Inspections, repairs, resurfacing and upgrades for existing pump tracks, BMX tracks and trails — including tracks we didn't build.</p><a href="#book" class="svc-link">Book an inspection →</a></article>
+      <article class="svc reveal has-img"><div class="svc-img"><img src="assets/riverside.webp" alt="Aerial view of an asphalt pump track" loading="lazy" decoding="async"></div><span class="svc-n">01</span><h3>Pump track design &amp; construction</h3><p>Turnkey asphalt and concrete pump tracks, designed for your site and built by our own crew — earthworks, shaping, drainage and sealing.</p><a href="#estimate" class="svc-link">Estimate a track →</a></article>
+      <article class="svc reveal has-img"><div class="svc-img"><img src="assets/svc-concept.webp" alt="3D concept render of a pump track layout" loading="lazy" decoding="async"></div><span class="svc-n">02</span><h3>Concept designs &amp; 3D renders</h3><p>2D layouts, 3D concept designs and flythroughs that bring your idea to life when presenting to council, land owners, boards and funders.</p><a href="#book" class="svc-link">Request a concept →</a></article>
+      <article class="svc reveal has-img"><div class="svc-img"><img src="assets/surf-modular.webp" alt="Modular composite pump track sections" loading="lazy" decoding="async"></div><span class="svc-n">03</span><h3>Modular &amp; relocatable pump tracks</h3><p>Composite modular pump tracks to buy or hire. Portable, expandable and quick to install — move it between neighbourhoods, schools or events.</p><a href="#surfaces" class="svc-link">Compare surfaces →</a></article>
+      <article class="svc reveal has-img"><div class="svc-img"><img src="assets/svc-trails.webp" alt="Bermed mountain bike trail through forest" loading="lazy" decoding="async"></div><span class="svc-n">04</span><h3>Bike parks &amp; MTB trails</h3><p>Bike park design and mountain bike trail building, from flowing singletrack to full bike park masterplans that fit the landscape.</p><a href="#book" class="svc-link">Talk trails →</a></article>
+      <article class="svc reveal has-img"><div class="svc-img"><img src="assets/svc-jumps.webp" alt="Row of shaped dirt jumps" loading="lazy" decoding="async"></div><span class="svc-n">05</span><h3>Dirt jumps &amp; jump lines</h3><p>Hand-shaped dirt jumps and progressive jump lines with clear start points and safe run-outs, built to suit local riders and clubs.</p><a href="#book" class="svc-link">Plan a jump line →</a></article>
+      <article class="svc reveal has-img"><div class="svc-img"><img src="assets/school.webp" alt="Children riding a modular track at a school" loading="lazy" decoding="async"></div><span class="svc-n">06</span><h3>Bikes in Schools &amp; skills tracks</h3><p>School bike tracks, learn-to-ride loops and skills parks that fit Bikes in Schools programmes, playground spaces and PE lessons.</p><a href="#book" class="svc-link">Plan a school track →</a></article>
+      <article class="svc reveal has-img"><div class="svc-img"><img src="assets/plains.webp" alt="Families watching riders at a community pump track" loading="lazy" decoding="async"></div><span class="svc-n">07</span><h3>Consultation &amp; funding support</h3><p>Community and student consultation, council reports, drawings and cost breakdowns that make funding applications easier to win.</p><a href="#faq" class="svc-link">See FAQ →</a></article>
+      <article class="svc reveal has-img"><div class="svc-img"><img src="assets/surf-asphalt.webp" alt="Freshly sealed asphalt surface" loading="lazy" decoding="async"></div><span class="svc-n">08</span><h3>Maintenance &amp; resurfacing</h3><p>Inspections, repairs, resurfacing and upgrades for existing pump tracks, BMX tracks and trails — including tracks we didn't build.</p><a href="#book" class="svc-link">Book an inspection →</a></article>
     </div>
   </div>
 </section>
@@ -126,20 +134,20 @@
     </div>
     <div class="surface-grid">
       <article class="surface reveal">
-        <div class="swatch sw-asphalt"></div>
+        <div class="swatch sw-asphalt"><img src="assets/surf-asphalt.webp" alt="Close-up of a sealed asphalt pump track surface" loading="lazy" decoding="async" width="800" height="600"></div>
         <h3>Asphalt</h3>
         <p>The classic asphalt pump track. Smooth, quiet and fast with a forgiving feel. Ideal for council parks and multi-use community tracks.</p>
         <ul><li>Fast, quiet ride</li><li>25+ year design life</li><li>Easy patch repairs</li></ul>
       </article>
       <article class="surface reveal featured">
         <span class="tag">Most durable</span>
-        <div class="swatch sw-concrete"></div>
+        <div class="swatch sw-concrete"><img src="assets/surf-concrete.webp" alt="Close-up of a sculpted concrete pump track berm" loading="lazy" decoding="async" width="800" height="600"></div>
         <h3>Concrete</h3>
         <p>Sculpted, crisp lines and exceptional longevity. Our pick for high-use sites, coastal exposure and architectural landscapes.</p>
         <ul><li>Longest life, lowest upkeep</li><li>Precise sculpted features</li><li>Colour &amp; finish options</li></ul>
       </article>
       <article class="surface reveal">
-        <div class="swatch sw-modular"></div>
+        <div class="swatch sw-modular"><img src="assets/surf-modular.webp" alt="Close-up of bolted modular composite pump track sections" loading="lazy" decoding="async" width="800" height="600"></div>
         <h3>Modular</h3>
         <p>Prefabricated composite sections that bolt together. A portable, relocatable pump track — buy it or hire it for schools, trials and events.</p>
         <ul><li>Installs in days</li><li>Relocatable, expandable, hireable</li><li>Minimal groundworks</li></ul>
@@ -349,9 +357,15 @@
 </section>
 
 <!-- CTA -->
-<section class="cta-band">
+<section class="cta-band cta-video">
+  <video class="cta-vid" muted loop playsinline preload="none" poster="assets/media/ride-poster.webp" data-lazyplay aria-hidden="true">
+    <source src="assets/media/ride.webm" type="video/webm">
+    <source src="assets/media/ride.mp4" type="video/mp4">
+  </video>
+  <div class="cta-shade"></div>
+  <span class="media-note">AI-generated demo footage</span>
   <div class="container cta-inner reveal">
-    <h2>Ready to see what fits?</h2>
+    <h2>Ready to see <em>what fits?</em></h2>
     <a href="#estimate" class="btn btn-accent">Open the estimator <span class="arr">→</span></a>
   </div>
 </section>
@@ -373,5 +387,6 @@
 <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
 <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
 <script src="app.js"></script>
+<script src="motion.js"></script>
 </body>
 </html>

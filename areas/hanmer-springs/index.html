@@ -27,8 +27,9 @@
 </header>
 <main>
 
-<section class="area-hero">
-  <div class="hero-bg" aria-hidden="true"><div class="blob b1"></div><div class="grain"></div></div>
+<section class="area-hero has-img">
+  <div class="hero-bg" aria-hidden="true"><div class="area-bg" data-parallax="60" style="background-image:url(../../assets/region-foothills.webp)"></div><div class="area-shade"></div><div class="grain"></div></div>
+  <span class="media-note">AI-generated illustrative image</span>
   <div class="container">
     <nav class="crumbs reveal" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span>/</span><a href="../index.html">Areas we serve</a><span>/</span><span>Hanmer Springs</span></nav>
     <p class="eyebrow reveal"><span class="dot"></span> North Canterbury (Hurunui) · Hurunui District Council</p>
@@ -117,5 +118,6 @@ document.getElementById('navToggle').onclick=()=>n.classList.toggle('open');
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%6)*60+'ms';io.observe(el)});})();
 </script>
+<script src="../../motion.js"></script>
 </body>
 </html>

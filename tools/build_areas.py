@@ -123,6 +123,11 @@ A = [
 BY = {a['slug']: a for a in A}
 BASE = 'https://timothyclarkson.github.io/flowline-pumptrack-demo/'
 
+REGION_IMG = {'christchurch':'plains','rolleston':'plains','lincoln':'plains','selwyn':'plains','darfield':'foothills','leeston':'plains',
+ 'ashburton':'plains','methven':'foothills','geraldine':'foothills','temuka':'plains','timaru':'coastal','rangiora':'plains','kaiapoi':'coastal',
+ 'woodend-pegasus':'coastal','oxford':'foothills','amberley':'north','waipara-hurunui':'north','hanmer-springs':'foothills','cheviot':'north',
+ 'akaroa-banks-peninsula':'coastal'}
+
 SERVICES = [
  ('Pump track design & construction', 'Asphalt and concrete pump tracks designed for your site and built by our own crew.'),
  ('Concept designs & 3D renders', '2D layouts and 3D concepts for council, land owner and funding presentations.'),
@@ -182,6 +187,7 @@ document.getElementById('navToggle').onclick=()=>n.classList.toggle('open');
 const io=new IntersectionObserver(es=>es.forEach(e=>{{if(e.isIntersecting){{e.target.classList.add('in');io.unobserve(e.target)}}}}),{{threshold:.1}});
 document.querySelectorAll('.reveal').forEach((el,i)=>{{el.style.transitionDelay=(i%6)*60+'ms';io.observe(el)}});}})();
 </script>
+<script src="{prefix}motion.js"></script>
 </body>
 </html>
 '''
@@ -213,8 +219,9 @@ def page(a):
     kw = [f'Pump track builder {town}', f'Pump track design {town}', f'Asphalt & concrete pump tracks {town}', f'Modular pump track hire {town}', f'Bikes in Schools tracks {town}', f'Bike park & MTB trail building {group}']
     kwhtml = ''.join(f'<li>{E(k)}</li>' for k in kw)
     return head(title, desc, p, schema) + f'''
-<section class="area-hero">
-  <div class="hero-bg" aria-hidden="true"><div class="blob b1"></div><div class="grain"></div></div>
+<section class="area-hero has-img">
+  <div class="hero-bg" aria-hidden="true"><div class="area-bg" data-parallax="60" style="background-image:url(../../assets/region-{REGION_IMG[a['slug']]}.webp)"></div><div class="area-shade"></div><div class="grain"></div></div>
+  <span class="media-note">AI-generated illustrative image</span>
   <div class="container">
     <nav class="crumbs reveal" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span>/</span><a href="../index.html">Areas we serve</a><span>/</span><span>{E(town)}</span></nav>
     <p class="eyebrow reveal"><span class="dot"></span> {E(group)} · {E(a['council'])}</p>
@@ -299,8 +306,9 @@ def hub():
     schema = {'@context': 'https://schema.org', '@graph': [{**BIZ, 'areaServed': [{'@type': 'City', 'name': a['name']} for a in A]}]}
     return head('Areas We Serve | Pump Track Builders Across Canterbury — Timaru to Cheviot | Flowline',
                 'Flowline builds pump tracks, bike parks and trails across Canterbury — from Timaru in the south to Amberley and Cheviot in the north. Demo site.', p, schema) + f'''
-<section class="area-hero">
-  <div class="hero-bg" aria-hidden="true"><div class="blob b1"></div><div class="grain"></div></div>
+<section class="area-hero has-img">
+  <div class="hero-bg" aria-hidden="true"><div class="area-bg" data-parallax="60" style="background-image:url(../assets/region-plains.webp)"></div><div class="area-shade"></div><div class="grain"></div></div>
+  <span class="media-note">AI-generated illustrative image</span>
   <div class="container">
     <nav class="crumbs reveal" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Areas we serve</span></nav>
     <p class="eyebrow reveal"><span class="dot"></span> Canterbury · Timaru to Cheviot</p>
