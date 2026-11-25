@@ -127,3 +127,10 @@ The **Pos** column is the competitor's Google NZ position.
 - The page is still noindex because it's a demo.
 
 **Not used:** park names and basketball terms (Parklife's main traffic) and competitor brand names such as "440 MTB park", because they don't fit this brand.
+
+## Update: location pages and build types
+- **Location pages:** I added 20 pages under `/areas/<slug>/` plus an "Areas we serve" hub at `/areas/`. Each page targets "Pump track builder {Town}", "Pump track design {Town}", "Modular pump track hire {Town}", "Bikes in Schools tracks {Town}" and "Bike park & MTB trail building {service area}". The pages are built by `tools/build_areas.py`.
+- **Estimator build types:**
+  - *Track only*: length × width, with a width slider from 0.5 to 2.0 m.
+  - *Fill in*: the whole area is surfaced (polygon area).
+  - Both price at $400–$600 per m², excl. GST.

@@ -22,7 +22,7 @@
     <span class="brand-word">Flowline<span class="brand-sub">Pump Tracks</span></span>
   </a>
   <nav class="nav-links" id="navLinks">
-    <a href="#why">Why</a><a href="#services">Services</a><a href="#surfaces">Surfaces</a><a href="#how">Process</a><a href="#projects">Projects</a><a href="#faq">FAQ</a>
+    <a href="#why">Why</a><a href="#services">Services</a><a href="#surfaces">Surfaces</a><a href="#how">Process</a><a href="#projects">Projects</a><a href="areas/index.html">Areas</a><a href="#faq">FAQ</a>
   </nav>
   <a href="#estimate" class="btn btn-sm btn-dark">Get an estimate</a>
   <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span></button>
@@ -40,7 +40,7 @@
     <h1 class="reveal">Places to roll,<br><em>built to last.</em></h1>
     <p class="lead reveal">Flowline handles pump track design and construction for councils and schools — asphalt, concrete and modular pump tracks, plus bike parks, skills tracks and trails — that get whole communities moving, from first-time scooters to BMX regulars.</p>
     <div class="hero-cta reveal">
-      <a href="#estimate" class="btn btn-accent">Draw your site &amp; estimate <span class="arr">→</span></a>
+      <a href="#estimate" class="btn btn-accent">Draw your track &amp; estimate <span class="arr">→</span></a>
       <a href="#how" class="btn btn-ghost">How we work</a>
     </div>
     <dl class="hero-stats reveal">
@@ -64,7 +64,7 @@
       <g fill="#ffffff22"><circle cx="175" cy="65" r="6"/><circle cx="245" cy="65" r="6"/><circle cx="175" cy="235" r="6"/><circle cx="245" cy="235" r="6"/></g>
       <circle class="rider" r="6" fill="#d9ff5b"><animateMotion dur="7s" repeatCount="indefinite" path="M80 150c0-55 40-85 95-85h70c55 0 95 30 95 85s-40 85-95 85h-70c-55 0-95-30-95-85z"/></circle>
     </svg>
-    <div class="hero-card-meta"><span>Concept · Community loop</span><strong>~640 m² · ~110 m of track</strong></div>
+    <div class="hero-card-meta"><span>Concept · Community loop</span><strong>~120 m × 1.5 m · ~180 m²</strong></div>
   </div>
 </section>
 
@@ -90,7 +90,7 @@
       <article class="why-card reveal"><div class="ico">◎</div><h3>Community anchor</h3><p>Tracks become meeting places. Councils see higher park use, more passive surveillance and fewer issues after dark.</p></article>
       <article class="why-card reveal"><div class="ico">▢</div><h3>Low ongoing cost</h3><p>Sealed asphalt and concrete tracks need minimal upkeep — a sweep and periodic inspection, not constant reshaping.</p></article>
       <article class="why-card reveal"><div class="ico">✎</div><h3>Curriculum-ready</h3><p>For schools: PE, wheel-skills programmes, physics of motion and student co-design of the layout.</p></article>
-      <article class="why-card reveal"><div class="ico">⌂</div><h3>Fits real sites</h3><p>From a 250 m² school corner to a 2,000 m² destination track in a regional reserve. We design to your space.</p></article>
+      <article class="why-card reveal"><div class="ico">⌂</div><h3>Fits real sites</h3><p>From a 60 m learn-to-ride loop in a school corner to a 500 m+ destination track in a regional reserve. We design to your space.</p></article>
     </div>
   </div>
 </section>
@@ -170,8 +170,8 @@
   <div class="container">
     <div class="section-head reveal light">
       <p class="eyebrow">Instant estimator</p>
-      <h2>Draw your site. <em>See a range in seconds.</em></h2>
-      <p class="sub">Search an address, outline where you'd like the track on the satellite map, and choose a surface. You'll get an indicative price range and size guide.</p>
+      <h2>Draw your track. <em>See a range in seconds.</em></h2>
+      <p class="sub">Search an address and pick a build type. <b>Track only</b>: trace the riding line (loops and extra lines welcome) and set the track width. <b>Fill in</b>: outline the whole area to surface. You'll see the surfaced m² and an indicative price range.</p>
     </div>
 
     <div class="est-shell reveal">
@@ -184,14 +184,29 @@
         </form>
         <div id="map" aria-label="Satellite map"></div>
         <div class="map-tools">
-          <button class="tool" id="drawBtn"><span>✎</span> Draw area</button>
+          <button class="tool" id="drawBtn"><span>✎</span> Draw track</button>
+          <button class="tool tool-accent" id="finishBtn" hidden><span>✓</span> Finish</button>
           <button class="tool" id="editBtn" disabled><span>⤧</span> Edit</button>
           <button class="tool" id="resetBtn" disabled><span>↺</span> Reset</button>
         </div>
-        <div class="map-hint" id="mapHint">1 · Find your site &nbsp;→&nbsp; 2 · Tap <b>Draw area</b> and click around the track footprint &nbsp;→&nbsp; 3 · Click the first point to finish</div>
+        <div class="map-hint" id="mapHint">1 · Find your site &nbsp;→&nbsp; 2 · Tap <b>Draw track</b> and click along the riding line &nbsp;→&nbsp; 3 · Click the last point again to finish</div>
       </div>
 
       <aside class="est-panel">
+        <div class="est-step">
+          <label class="lbl">Build type</label>
+          <div class="seg seg2" id="modeSeg" role="radiogroup">
+            <button type="button" class="on" data-m="track" role="radio" aria-checked="true"><b>Track only</b><small>Draw the riding line</small></button>
+            <button type="button" data-m="fill" role="radio" aria-checked="false"><b>Fill in</b><small>Draw the whole area</small></button>
+          </div>
+          <p class="mode-note" id="modeNote">Only the riding line is surfaced: length × width.</p>
+          <div class="width-row" id="widthRow">
+            <div class="width-head"><label class="lbl" for="widthIn">Track width</label><output id="widthOut">1.5 m</output></div>
+            <input type="range" id="widthIn" min="0.5" max="2" step="0.1" value="1.5" aria-label="Track width in metres">
+            <div class="width-scale"><span>0.5 m</span><span>2.0 m</span></div>
+          </div>
+        </div>
+
         <div class="est-step">
           <label class="lbl">Surface</label>
           <div class="seg" id="surfaceSeg" role="radiogroup">
@@ -204,20 +219,21 @@
         <div class="est-result" id="estResult">
           <div class="empty" id="estEmpty">
             <div class="empty-ico">◇</div>
-            <p>Draw an area on the map to see your estimate.</p>
+            <p id="emptyText">Draw the track line on the map to see your estimate.</p>
             <button type="button" class="link" id="sampleBtn">or try a sample site →</button>
           </div>
           <div class="filled" id="estFilled" hidden>
-            <div class="metric"><span class="lbl">Drawn area</span><strong id="outArea">0</strong><span class="unit">m²</span></div>
+            <div class="metric"><span class="lbl" id="mainLbl">Track length</span><strong id="outMain">0</strong><span class="unit" id="mainUnit">m</span><span class="calc" id="outCalc"></span></div>
             <div class="price">
               <span class="lbl">Indicative range · <span id="outSurface">Asphalt</span></span>
               <div class="price-num"><span id="outLow">$0</span><span class="dash">–</span><span id="outHigh">$0</span></div>
-              <span class="gst">NZD, excl. GST · based on $400–$600 per m²</span>
+              <span class="gst">NZD, excl. GST · surfaced m² × $400–$600 per m²</span>
             </div>
             <div class="range-bar"><span id="rangeFill"></span></div>
             <dl class="hints">
-              <div><dt>Track length</dt><dd id="outLen">—</dd></div>
-              <div><dt>Footprint</dt><dd id="outDims">—</dd></div>
+              <div><dt>Build type</dt><dd id="outBuild">—</dd></div>
+              <div><dt id="outWidthLbl">Track width</dt><dd id="outWidth">—</dd></div>
+              <div><dt id="outAreaLbl">Surfaced area</dt><dd id="outArea">—</dd></div>
               <div><dt>Category</dt><dd id="outCat">—</dd></div>
               <div><dt>Riders at once</dt><dd id="outRiders">—</dd></div>
             </dl>
@@ -225,7 +241,7 @@
             <a href="#book" class="btn btn-accent btn-block" id="bookCta">Book a site visit <span class="arr">→</span></a>
           </div>
         </div>
-        <p class="disclaimer"><b>Indicative estimate only.</b> Not a quote. Final pricing depends on site conditions, earthworks, drainage, access, design complexity and consents, and is confirmed after a site visit.</p>
+        <p class="disclaimer"><b>Indicative estimate only.</b> Not a quote. Track only = drawn line × chosen width; Fill in = whole drawn area. Final pricing depends on site conditions, earthworks, drainage, access, design complexity and consents, and is confirmed after a site visit.</p>
       </aside>
     </div>
   </div>
@@ -242,7 +258,9 @@
         <p class="lbl">Your estimate</p>
         <dl>
           <div><dt>Address</dt><dd data-sum="address">Not set yet</dd></div>
-          <div><dt>Area</dt><dd data-sum="area">—</dd></div>
+          <div><dt>Build type</dt><dd data-sum="build">Track only</dd></div>
+          <div><dt>Track</dt><dd data-sum="length">—</dd></div>
+          <div><dt>Surfaced area</dt><dd data-sum="area">—</dd></div>
           <div><dt>Surface</dt><dd data-sum="surface">—</dd></div>
           <div><dt>Range</dt><dd data-sum="range">—</dd></div>
         </dl>
@@ -263,8 +281,15 @@
         <label>Preferred date<input name="date" type="date" id="fDate"></label>
       </div>
       <div class="row3">
-        <label>Area (m²)<input name="area" id="fArea" inputmode="numeric"></label>
+        <label>Build type<select name="build" id="fBuild"><option>Track only</option><option>Fill in</option></select></label>
+        <label>Track length (m)<input name="length" id="fLength" inputmode="numeric"></label>
+        <label>Track width (m)<input name="width" id="fWidth" inputmode="decimal"></label>
+      </div>
+      <div class="row2">
+        <label>Surfaced (m²)<input name="area" id="fArea" inputmode="numeric"></label>
         <label>Surface<select name="surface" id="fSurface"><option>Asphalt</option><option>Concrete</option><option>Modular</option></select></label>
+      </div>
+      <div class="row1">
         <label>Estimate<input name="estimate" id="fEstimate" readonly></label>
       </div>
       <label>Notes<textarea name="notes" rows="4" placeholder="Who will ride it, timing, budget or funding stage…"></textarea></label>
@@ -289,10 +314,10 @@
       <p class="sub">Illustrative concept projects for this demo, shown with AI-generated imagery — not real builds.</p>
     </div>
     <div class="gallery">
-      <figure class="g-item g-wide reveal"><div class="g-art art-1"></div><figcaption><strong>Riverside Reserve Loop</strong><span>Concept · Council · Asphalt · 1,150 m²</span></figcaption></figure>
-      <figure class="g-item reveal"><div class="g-art art-2"></div><figcaption><strong>Hillside Primary</strong><span>Concept · School · Modular · 280 m²</span></figcaption></figure>
-      <figure class="g-item reveal"><div class="g-art art-3"></div><figcaption><strong>Coastal Domain</strong><span>Concept · Council · Concrete · 820 m²</span></figcaption></figure>
-      <figure class="g-item g-wide reveal"><div class="g-art art-4"></div><figcaption><strong>Plains Community Park</strong><span>Concept · Trust · Asphalt · 640 m²</span></figcaption></figure>
+      <figure class="g-item g-wide reveal"><span class="g-badge">Fill in</span><div class="g-art art-1"></div><figcaption><strong>Riverside Reserve Loop</strong><span>Concept · Council · Asphalt · Fill in · ~1,150 m² fully surfaced</span></figcaption></figure>
+      <figure class="g-item reveal"><div class="g-art art-2"></div><figcaption><strong>Hillside Primary</strong><span>Concept · School · Modular · 90 m track</span></figcaption></figure>
+      <figure class="g-item reveal"><div class="g-art art-3"></div><figcaption><strong>Coastal Domain</strong><span>Concept · Council · Concrete · 260 m track</span></figcaption></figure>
+      <figure class="g-item g-wide reveal"><span class="g-badge g-badge-line">Track only</span><div class="g-art art-4"></div><figcaption><strong>Plains Community Park</strong><span>Concept · Trust · Asphalt · Track only · 210 m × 1.5 m</span></figcaption></figure>
     </div>
   </div>
 </section>
@@ -307,15 +332,16 @@
     </div>
     <div class="faq">
       <details class="reveal"><summary>What is a pump track?</summary><p>A sealed or modular loop of rollers, berms and transitions that riders move around by pumping — pushing and pulling with their body — rather than pedalling. Bikes, BMX, scooters, skateboards and wheelchairs can all use one.</p></details>
-      <details class="reveal"><summary>How much space do we need?</summary><p>A compact school track can work in around 250–400 m². Community tracks are typically 500–1,200 m², and destination tracks 1,500 m² and up. The estimator shows a size category as you draw.</p></details>
-      <details class="reveal"><summary>How much does a pump track cost?</summary><p>The indicative range uses $400–$600 per m² excl. GST across design, earthworks, shaping and surfacing for a typical site. Unusual ground, drainage, retaining, lighting, fencing or long access can move the price — we confirm everything after the site visit.</p></details>
+      <details class="reveal"><summary>How much space or track length do we need?</summary><p>It's about track length more than land area. A compact school loop is around 60–150 m of track, community tracks 150–300 m, and destination tracks 500 m and up — usually 1.5 m wide (0.5–2.0 m is possible), laid out in a footprint a few times larger. Or choose a fully surfaced "fill in" track. The estimator shows length and a size category as you draw.</p></details>
+      <details class="reveal"><summary>How much does a pump track cost?</summary><p>We price the surfaced area at $400–$600 per m², excl. GST. Choose <b>Track only</b> (only the riding line is surfaced: length × width, typically 1.5 m) or <b>Fill in</b> (the whole area, infield included, is surfaced). For example, 120 m of track at 1.5 m wide is 180 m² — roughly $72,000–$108,000. That covers design, earthworks, shaping and surfacing for a typical site; unusual ground, drainage, retaining, lighting, fencing or long access can move the price — we confirm everything after the site visit.</p></details>
       <details class="reveal"><summary>Asphalt, concrete or modular — which is right?</summary><p>Asphalt suits most parks and is fast and quiet. Concrete lasts longest and allows sculpted features. Modular suits schools, temporary sites or where groundworks aren't possible. We'll recommend one after seeing the site.</p></details>
       <details class="reveal"><summary>How long does a build take?</summary><p>Modular installs can take days. Sealed tracks typically take 4–10 weeks on site, depending on size, weather and curing. Design and consents usually come first.</p></details>
       <details class="reveal"><summary>Can you help with funding applications?</summary><p>Yes. We provide concept images, drawings and cost breakdowns that suit council long-term plans, community trusts and school fundraising.</p></details>
+      <details class="reveal"><summary>What's the difference between "Track only" and "Fill in"?</summary><p>Track only surfaces just the riding line — usually around 1.5 m wide — with grass or landscaping in between, which keeps cost down. Fill in surfaces the whole area, infield included, for a clean, low-maintenance, all-weather pad that's easy to sweep. The estimator prices both.</p></details>
       <details class="reveal"><summary>Can we hire a modular pump track?</summary><p>Yes. Composite modular pump tracks can be bought outright or hired for a term, event or trial, then moved to another park or school. It's a low-risk way to test demand before committing to a permanent asphalt or concrete track.</p></details>
       <details class="reveal"><summary>Do you build bike parks, MTB trails and dirt jumps?</summary><p>Yes. Alongside pump tracks we design and build mountain bike trails, jump lines, dirt jumps, skills parks and walking tracks for councils, clubs and land owners.</p></details>
       <details class="reveal"><summary>Do you build Bikes in Schools tracks?</summary><p>Yes. We design school bike tracks and learn-to-ride loops that suit Bikes in Schools programmes, from a compact playground loop to a full skills track.</p></details>
-      <details class="reveal"><summary>Where do you work?</summary><p>We're based in Christchurch and build pump tracks across Canterbury — including Selwyn, Rolleston, Lincoln, Prebbleton and Waimakariri — and further afield in the South Island.</p></details>
+      <details class="reveal"><summary>Where do you work?</summary><p>We're based in Christchurch and build pump tracks across Canterbury — including Selwyn, Rolleston, Lincoln, Prebbleton and Waimakariri — and further afield in the South Island. See <a href="areas/index.html">all areas we serve</a>.</p></details>
       <details class="reveal"><summary>Do you maintain or resurface existing tracks?</summary><p>Yes. We inspect, repair and resurface existing pump tracks, BMX tracks and trails, and can provide an ongoing maintenance plan.</p></details>
       <details class="reveal"><summary>Is it safe for young children?</summary><p>Our layouts include gentle beginner lines, clear sightlines and separated flow. We design to recognised guidance and provide safety signage and a maintenance plan at handover.</p></details>
     </div>
@@ -336,6 +362,7 @@
     <div class="brand foot-brand"><span class="brand-word">Flowline<span class="brand-sub">Pump Tracks</span></span></div>
     <p>Ōtautahi Christchurch, Aotearoa New Zealand · hello@flowline.example</p>
     <p>Pump track design &amp; construction · Concept designs &amp; 3D renders · Modular pump track hire · Bike parks, MTB trails &amp; jump lines · Bikes in Schools tracks · Christchurch, Canterbury &amp; the South Island</p>
+    <nav class="foot-areas" aria-label="Areas we serve"><a href="areas/index.html"><b>Areas we serve:</b></a><a href="areas/christchurch/index.html">Christchurch</a><a href="areas/rolleston/index.html">Rolleston</a><a href="areas/lincoln/index.html">Lincoln</a><a href="areas/selwyn/index.html">Selwyn</a><a href="areas/darfield/index.html">Darfield</a><a href="areas/leeston/index.html">Leeston</a><a href="areas/ashburton/index.html">Ashburton</a><a href="areas/methven/index.html">Methven</a><a href="areas/geraldine/index.html">Geraldine</a><a href="areas/temuka/index.html">Temuka</a><a href="areas/timaru/index.html">Timaru</a><a href="areas/rangiora/index.html">Rangiora</a><a href="areas/kaiapoi/index.html">Kaiapoi</a><a href="areas/woodend-pegasus/index.html">Woodend &amp; Pegasus</a><a href="areas/oxford/index.html">Oxford</a><a href="areas/amberley/index.html">Amberley</a><a href="areas/waipara-hurunui/index.html">Waipara &amp; Hurunui</a><a href="areas/hanmer-springs/index.html">Hanmer Springs</a><a href="areas/cheviot/index.html">Cheviot</a><a href="areas/akaroa-banks-peninsula/index.html">Akaroa &amp; Banks Peninsula</a></nav>
     <p class="fine">Demo website. Flowline Pump Tracks is a fictional company; projects, imagery and figures are illustrative (project images are AI-generated). Map imagery © Esri, Maxar, Earthstar Geographics. Geocoding © OpenStreetMap contributors (Nominatim).</p>
   </div>
 </footer>
