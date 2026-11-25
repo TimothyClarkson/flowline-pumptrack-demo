@@ -20,7 +20,7 @@
   if (!window.L) { $('#map').innerHTML = '<p style="padding:24px;color:#fff">Map failed to load. Please refresh.</p>'; return; }
   const CHCH = [-43.5321, 172.6362];
   const map = L.map('map', { zoomControl: false, attributionControl: true, scrollWheelZoom: false }).setView(CHCH, 13);
-  L.control.zoom({ position: 'topright' }).addTo(map);
+  L.control.zoom({ position: innerWidth < 700 ? 'bottomright' : 'topright' }).addTo(map);
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 20, maxNativeZoom: 19, attribution: 'Imagery © Esri, Maxar, Earthstar Geographics'
   }).addTo(map);
