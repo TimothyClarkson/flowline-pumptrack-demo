@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flowline Pump Tracks — Pump tracks for Canterbury communities</title>
+<meta name="description" content="Flowline designs and builds asphalt, concrete and modular pump tracks for councils and schools across Christchurch and Canterbury. Draw your site and get an indicative estimate in seconds.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="demo-ribbon">Demo site — fictional company, sample content only</div>
+
+<header class="nav" id="nav">
+  <a href="#top" class="brand" aria-label="Flowline home">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="bm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9ff5b"/><stop offset="1" stop-color="#5be3b0"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="#0f1a17"/><path d="M7 26c4 0 5-12 9-12s4 12 8 12 5-12 9-12" fill="none" stroke="url(#bm)" stroke-width="3.4" stroke-linecap="round"/></svg>
+    <span class="brand-word">Flowline<span class="brand-sub">Pump Tracks</span></span>
+  </a>
+  <nav class="nav-links" id="navLinks">
+    <a href="#why">Why</a><a href="#surfaces">Surfaces</a><a href="#how">Process</a><a href="#projects">Projects</a><a href="#faq">FAQ</a>
+  </nav>
+  <a href="#estimate" class="btn btn-sm btn-dark">Get an estimate</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span></button>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="grain"></div>
+    <svg class="hero-lines" viewBox="0 0 1200 600" preserveAspectRatio="none"><path d="M-20 420 C 150 420, 200 260, 340 260 S 520 420, 660 420 S 860 260, 1000 260 S 1150 380, 1240 380" /><path d="M-20 470 C 150 470, 200 310, 340 310 S 520 470, 660 470 S 860 310, 1000 310 S 1150 430, 1240 430" /></svg>
+  </div>
+  <div class="container hero-inner">
+    <p class="eyebrow reveal"><span class="dot"></span> Ōtautahi Christchurch · Canterbury · South Island</p>
+    <h1 class="reveal">Places to roll,<br><em>built to last.</em></h1>
+    <p class="lead reveal">Flowline designs and builds pump tracks for councils and schools — asphalt, concrete and modular — that get whole communities moving, from first-time scooters to BMX regulars.</p>
+    <div class="hero-cta reveal">
+      <a href="#estimate" class="btn btn-accent">Draw your site &amp; estimate <span class="arr">→</span></a>
+      <a href="#how" class="btn btn-ghost">How we work</a>
+    </div>
+    <dl class="hero-stats reveal">
+      <div><dt>4–10 wks</dt><dd>typical build on site</dd></div>
+      <div><dt>All ages</dt><dd>balance bikes to BMX</dd></div>
+      <div><dt>25+ yrs</dt><dd>design life, sealed surfaces</dd></div>
+    </dl>
+  </div>
+  <div class="hero-card reveal" aria-hidden="true">
+    <svg viewBox="0 0 420 300" class="hero-illus">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d2b27"/><stop offset="1" stop-color="#0d1513"/></linearGradient>
+        <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d9ff5b"/><stop offset="1" stop-color="#5be3b0"/></linearGradient>
+        <pattern id="grass" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#3c6b4a"/><circle cx="2" cy="3" r=".8" fill="#4d7f5a"/><circle cx="6" cy="6" r=".7" fill="#335d40"/></pattern>
+      </defs>
+      <rect width="420" height="300" rx="22" fill="url(#grass)"/>
+      <path class="track-outer" d="M80 150c0-55 40-85 95-85h70c55 0 95 30 95 85s-40 85-95 85h-70c-55 0-95-30-95-85z" fill="none" stroke="#2a2f2e" stroke-width="34" stroke-linejoin="round"/>
+      <path d="M150 150c0-20 15-30 35-30h50c20 0 35 10 35 30s-15 30-35 30h-50c-20 0-35-10-35-30z" fill="none" stroke="#2a2f2e" stroke-width="30"/>
+      <path d="M118 150 L 150 150 M270 150 L 302 150" stroke="#2a2f2e" stroke-width="30"/>
+      <path class="ride" d="M80 150c0-55 40-85 95-85h70c55 0 95 30 95 85s-40 85-95 85h-70c-55 0-95-30-95-85z" fill="none" stroke="url(#g2)" stroke-width="2.5" stroke-dasharray="6 10"/>
+      <g fill="#ffffff22"><circle cx="175" cy="65" r="6"/><circle cx="245" cy="65" r="6"/><circle cx="175" cy="235" r="6"/><circle cx="245" cy="235" r="6"/></g>
+      <circle class="rider" r="6" fill="#d9ff5b"><animateMotion dur="7s" repeatCount="indefinite" path="M80 150c0-55 40-85 95-85h70c55 0 95 30 95 85s-40 85-95 85h-70c-55 0-95-30-95-85z"/></circle>
+    </svg>
+    <div class="hero-card-meta"><span>Concept · Community loop</span><strong>~640 m² · ~110 m of track</strong></div>
+  </div>
+</section>
+
+<!-- LOGOS / TRUST -->
+<section class="trust">
+  <div class="container trust-inner">
+    <span>Designed for</span>
+    <ul><li>City &amp; district councils</li><li>Primary &amp; intermediate schools</li><li>Secondary schools</li><li>Community trusts</li><li>Parks &amp; reserves</li></ul>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section" id="why">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Why pump tracks</p>
+      <h2>The hardest-working <em>square metre</em> in your park.</h2>
+      <p class="sub">A pump track is a looped circuit of rollers and berms you ride without pedalling — you "pump" your body to gain speed. It's inclusive, low-maintenance and used from dawn until the streetlights come on.</p>
+    </div>
+    <div class="why-grid">
+      <article class="why-card reveal"><div class="ico">◐</div><h3>For every age &amp; wheel</h3><p>Balance bikes, scooters, skateboards, wheelchairs, BMX and MTB share one surface. Lines scale from gentle to fast.</p></article>
+      <article class="why-card reveal"><div class="ico">↻</div><h3>Active, all day</h3><p>Continuous, self-paced movement builds balance, coordination and confidence — and it's genuinely fun, so kids come back.</p></article>
+      <article class="why-card reveal"><div class="ico">◎</div><h3>Community anchor</h3><p>Tracks become meeting places. Councils see higher park use, more passive surveillance and fewer issues after dark.</p></article>
+      <article class="why-card reveal"><div class="ico">▢</div><h3>Low ongoing cost</h3><p>Sealed asphalt and concrete tracks need minimal upkeep — a sweep and periodic inspection, not constant reshaping.</p></article>
+      <article class="why-card reveal"><div class="ico">✎</div><h3>Curriculum-ready</h3><p>For schools: PE, wheel-skills programmes, physics of motion and student co-design of the layout.</p></article>
+      <article class="why-card reveal"><div class="ico">⌂</div><h3>Fits real sites</h3><p>From a 250 m² school corner to a 2,000 m² destination track in a regional reserve. We design to your space.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- SURFACES -->
+<section class="section section-tint" id="surfaces">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Surfaces</p>
+      <h2>Three ways to build. <em>One standard.</em></h2>
+    </div>
+    <div class="surface-grid">
+      <article class="surface reveal">
+        <div class="swatch sw-asphalt"></div>
+        <h3>Asphalt</h3>
+        <p>The classic all-rounder. Smooth, quiet and fast with a forgiving feel. Ideal for council parks and multi-use community tracks.</p>
+        <ul><li>Fast, quiet ride</li><li>25+ year design life</li><li>Easy patch repairs</li></ul>
+      </article>
+      <article class="surface reveal featured">
+        <span class="tag">Most durable</span>
+        <div class="swatch sw-concrete"></div>
+        <h3>Concrete</h3>
+        <p>Sculpted, crisp lines and exceptional longevity. Our pick for high-use sites, coastal exposure and architectural landscapes.</p>
+        <ul><li>Longest life, lowest upkeep</li><li>Precise sculpted features</li><li>Colour &amp; finish options</li></ul>
+      </article>
+      <article class="surface reveal">
+        <div class="swatch sw-modular"></div>
+        <h3>Modular</h3>
+        <p>Prefabricated composite sections that bolt together. Relocatable and quick to install — great for schools, trials and events.</p>
+        <ul><li>Installs in days</li><li>Relocatable &amp; expandable</li><li>Minimal groundworks</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Process</p>
+      <h2>From first sketch to <em>opening day.</em></h2>
+    </div>
+    <ol class="process">
+      <li class="reveal"><span class="step">01</span><div><h3>Site visit &amp; brief</h3><p>We walk the site with your team, check levels, drainage, access and services, and listen to who'll be riding.</p></div></li>
+      <li class="reveal"><span class="step">02</span><div><h3>Concept design</h3><p>A layout and 3D flythrough, ideal for council reports, board meetings, funding bids and student consultation.</p></div></li>
+      <li class="reveal"><span class="step">03</span><div><h3>Consents &amp; funding support</h3><p>Drawings, specifications and cost breakdowns to support consents and community funding applications.</p></div></li>
+      <li class="reveal"><span class="step">04</span><div><h3>Build</h3><p>Earthworks, shaping and sealing by our own crew, with a safe, fenced site and regular updates for neighbours.</p></div></li>
+      <li class="reveal"><span class="step">05</span><div><h3>Handover &amp; launch</h3><p>Safety sign-off, signage, a maintenance plan and an optional opening-day skills session with local riders.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ESTIMATOR -->
+<section class="section estimator-section" id="estimate">
+  <div class="container">
+    <div class="section-head reveal light">
+      <p class="eyebrow">Instant estimator</p>
+      <h2>Draw your site. <em>See a range in seconds.</em></h2>
+      <p class="sub">Search an address, outline where you'd like the track on the satellite map, and choose a surface. You'll get an indicative price range and size guide.</p>
+    </div>
+
+    <div class="est-shell reveal">
+      <div class="est-map-wrap">
+        <form class="addr" id="addrForm" autocomplete="off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="addrInput" type="text" placeholder="Search a school, park or address in Canterbury…" aria-label="Address">
+          <button type="submit" class="btn btn-sm btn-accent" id="addrBtn">Find</button>
+          <ul class="addr-results" id="addrResults" role="listbox"></ul>
+        </form>
+        <div id="map" aria-label="Satellite map"></div>
+        <div class="map-tools">
+          <button class="tool" id="drawBtn"><span>✎</span> Draw area</button>
+          <button class="tool" id="editBtn" disabled><span>⤧</span> Edit</button>
+          <button class="tool" id="resetBtn" disabled><span>↺</span> Reset</button>
+        </div>
+        <div class="map-hint" id="mapHint">1 · Find your site &nbsp;→&nbsp; 2 · Tap <b>Draw area</b> and click around the track footprint &nbsp;→&nbsp; 3 · Click the first point to finish</div>
+      </div>
+
+      <aside class="est-panel">
+        <div class="est-step">
+          <label class="lbl">Surface</label>
+          <div class="seg" id="surfaceSeg" role="radiogroup">
+            <button type="button" class="on" data-s="Asphalt" role="radio" aria-checked="true">Asphalt</button>
+            <button type="button" data-s="Concrete" role="radio" aria-checked="false">Concrete</button>
+            <button type="button" data-s="Modular" role="radio" aria-checked="false">Modular</button>
+          </div>
+        </div>
+
+        <div class="est-result" id="estResult">
+          <div class="empty" id="estEmpty">
+            <div class="empty-ico">◇</div>
+            <p>Draw an area on the map to see your estimate.</p>
+            <button type="button" class="link" id="sampleBtn">or try a sample site →</button>
+          </div>
+          <div class="filled" id="estFilled" hidden>
+            <div class="metric"><span class="lbl">Drawn area</span><strong id="outArea">0</strong><span class="unit">m²</span></div>
+            <div class="price">
+              <span class="lbl">Indicative range · <span id="outSurface">Asphalt</span></span>
+              <div class="price-num"><span id="outLow">$0</span><span class="dash">–</span><span id="outHigh">$0</span></div>
+              <span class="gst">NZD, excl. GST · based on $400–$600 per m²</span>
+            </div>
+            <div class="range-bar"><span id="rangeFill"></span></div>
+            <dl class="hints">
+              <div><dt>Track length</dt><dd id="outLen">—</dd></div>
+              <div><dt>Footprint</dt><dd id="outDims">—</dd></div>
+              <div><dt>Category</dt><dd id="outCat">—</dd></div>
+              <div><dt>Riders at once</dt><dd id="outRiders">—</dd></div>
+            </dl>
+            <p class="cat-note" id="outNote"></p>
+            <a href="#book" class="btn btn-accent btn-block" id="bookCta">Book a site visit <span class="arr">→</span></a>
+          </div>
+        </div>
+        <p class="disclaimer"><b>Indicative estimate only.</b> Not a quote. Final pricing depends on site conditions, earthworks, drainage, access, design complexity and consents, and is confirmed after a site visit.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section class="section" id="book">
+  <div class="container book-grid">
+    <div class="reveal">
+      <p class="eyebrow">Next step</p>
+      <h2>Book a <em>site visit.</em></h2>
+      <p class="sub">We'll meet you on site, check the ground and talk through options, budget and funding. No cost, no obligation for Canterbury councils and schools.</p>
+      <div class="summary-card" id="summaryCard">
+        <p class="lbl">Your estimate</p>
+        <dl>
+          <div><dt>Address</dt><dd data-sum="address">Not set yet</dd></div>
+          <div><dt>Area</dt><dd data-sum="area">—</dd></div>
+          <div><dt>Surface</dt><dd data-sum="surface">—</dd></div>
+          <div><dt>Range</dt><dd data-sum="range">—</dd></div>
+        </dl>
+        <a href="#estimate" class="link">Adjust on the map →</a>
+      </div>
+    </div>
+    <form class="book-form reveal" id="bookForm" novalidate>
+      <div class="row2">
+        <label>Name<input name="name" required autocomplete="name"></label>
+        <label>Organisation<input name="org" required placeholder="School, council or trust"></label>
+      </div>
+      <div class="row2">
+        <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
+      </div>
+      <div class="row2">
+        <label>Site address<input name="address" id="fAddress"></label>
+        <label>Preferred date<input name="date" type="date" id="fDate"></label>
+      </div>
+      <div class="row3">
+        <label>Area (m²)<input name="area" id="fArea" inputmode="numeric"></label>
+        <label>Surface<select name="surface" id="fSurface"><option>Asphalt</option><option>Concrete</option><option>Modular</option></select></label>
+        <label>Estimate<input name="estimate" id="fEstimate" readonly></label>
+      </div>
+      <label>Notes<textarea name="notes" rows="4" placeholder="Who will ride it, timing, budget or funding stage…"></textarea></label>
+      <button class="btn btn-dark btn-block" type="submit">Request site visit <span class="arr">→</span></button>
+      <p class="fine">Demo form — nothing is sent or stored.</p>
+      <div class="success" id="bookSuccess" hidden>
+        <div class="tick"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg></div>
+        <h3>Thanks — request received.</h3>
+        <p id="successText">We'll be in touch within one working day to lock in a time.</p>
+        <button type="button" class="btn btn-ghost btn-sm" id="againBtn">Start another</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section section-tint" id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Selected work <span class="demo-chip">Demo content</span></p>
+      <h2>Tracks that <em>get ridden.</em></h2>
+      <p class="sub">Illustrative concept projects for this demo, shown with AI-generated imagery — not real builds.</p>
+    </div>
+    <div class="gallery">
+      <figure class="g-item g-wide reveal"><div class="g-art art-1"></div><figcaption><strong>Riverside Reserve Loop</strong><span>Concept · Council · Asphalt · 1,150 m²</span></figcaption></figure>
+      <figure class="g-item reveal"><div class="g-art art-2"></div><figcaption><strong>Hillside Primary</strong><span>Concept · School · Modular · 280 m²</span></figcaption></figure>
+      <figure class="g-item reveal"><div class="g-art art-3"></div><figcaption><strong>Coastal Domain</strong><span>Concept · Council · Concrete · 820 m²</span></figcaption></figure>
+      <figure class="g-item g-wide reveal"><div class="g-art art-4"></div><figcaption><strong>Plains Community Park</strong><span>Concept · Trust · Asphalt · 640 m²</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container faq-grid">
+    <div class="section-head reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2>Good <em>questions.</em></h2>
+      <p class="sub">Can't see yours? Ask us on the site visit.</p>
+    </div>
+    <div class="faq">
+      <details class="reveal"><summary>How much space do we need?</summary><p>A compact school track can work in around 250–400 m². Community tracks are typically 500–1,200 m², and destination tracks 1,500 m² and up. The estimator shows a size category as you draw.</p></details>
+      <details class="reveal"><summary>What does the price range include?</summary><p>The indicative range uses $400–$600 per m² excl. GST across design, earthworks, shaping and surfacing for a typical site. Unusual ground, drainage, retaining, lighting, fencing or long access can move the price — we confirm everything after the site visit.</p></details>
+      <details class="reveal"><summary>Asphalt, concrete or modular — which is right?</summary><p>Asphalt suits most parks and is fast and quiet. Concrete lasts longest and allows sculpted features. Modular suits schools, temporary sites or where groundworks aren't possible. We'll recommend one after seeing the site.</p></details>
+      <details class="reveal"><summary>How long does a build take?</summary><p>Modular installs can take days. Sealed tracks typically take 4–10 weeks on site, depending on size, weather and curing. Design and consents usually come first.</p></details>
+      <details class="reveal"><summary>Can you help with funding applications?</summary><p>Yes. We provide concept images, drawings and cost breakdowns that suit council long-term plans, community trusts and school fundraising.</p></details>
+      <details class="reveal"><summary>Is it safe for young children?</summary><p>Our layouts include gentle beginner lines, clear sightlines and separated flow. We design to recognised guidance and provide safety signage and a maintenance plan at handover.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container cta-inner reveal">
+    <h2>Ready to see what fits?</h2>
+    <a href="#estimate" class="btn btn-accent">Open the estimator <span class="arr">→</span></a>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container foot-inner">
+    <div class="brand foot-brand"><span class="brand-word">Flowline<span class="brand-sub">Pump Tracks</span></span></div>
+    <p>Ōtautahi Christchurch, Aotearoa New Zealand · hello@flowline.example</p>
+    <p class="fine">Demo website. Flowline Pump Tracks is a fictional company; projects, imagery and figures are illustrative (project images are AI-generated). Map imagery © Esri, Maxar, Earthstar Geographics. Geocoding © OpenStreetMap contributors (Nominatim).</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
