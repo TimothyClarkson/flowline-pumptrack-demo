@@ -425,3 +425,5 @@ h1 em,h2 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-sp
 @media (max-width:1080px){.hero-video .hero-card{display:none}}
 @media (max-width:600px){.hero-video{min-height:88vh}.hero-shade{background:linear-gradient(0deg,#0c1412f2 10%,#0c141299 60%,#0c141266)}.vid-toggle{top:auto;bottom:14px}.media-note{bottom:22px}}
 @media (prefers-reduced-motion:reduce){.hero-vid{animation:none;transform:none}.scroll-line path{stroke-dashoffset:0}.reveal{filter:none}.g-art,[data-parallax]{transform:none!important}}
+
+.leaflet-editing-icon.start-pt{background:#d9ff5b!important;border-color:#0d1a14!important;width:16px!important;height:16px!important;margin:-8px 0 0 -8px!important;box-shadow:0 0 0 4px rgba(217,255,91,.35);cursor:pointer}

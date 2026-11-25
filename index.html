@@ -179,7 +179,7 @@
     <div class="section-head reveal light">
       <p class="eyebrow">Instant estimator</p>
       <h2>Draw your track. <em>See a range in seconds.</em></h2>
-      <p class="sub">Search an address and pick a build type. <b>Track only</b>: trace the riding line (loops and extra lines welcome) and set the track width. <b>Fill in</b>: outline the whole area to surface. You'll see the surfaced m² and an indicative price range.</p>
+      <p class="sub">Search an address and draw your track once — a closed loop or an open line, extra lines welcome. Then flip the build type as often as you like: <b>Track only</b> prices the line × your chosen width; <b>Fill in</b> prices the whole area inside the loop. You'll see the surfaced m² and an indicative price range.</p>
     </div>
 
     <div class="est-shell reveal">
@@ -194,6 +194,7 @@
         <div class="map-tools">
           <button class="tool" id="drawBtn"><span>✎</span> Draw track</button>
           <button class="tool tool-accent" id="finishBtn" hidden><span>✓</span> Finish</button>
+          <button class="tool tool-accent" id="closeBtn" hidden title="Join the last point back to the first"><span>◯</span> Close shape</button>
           <button class="tool" id="editBtn" disabled><span>⤧</span> Edit</button>
           <button class="tool" id="resetBtn" disabled><span>↺</span> Reset</button>
         </div>
@@ -204,8 +205,8 @@
         <div class="est-step">
           <label class="lbl">Build type</label>
           <div class="seg seg2" id="modeSeg" role="radiogroup">
-            <button type="button" class="on" data-m="track" role="radio" aria-checked="true"><b>Track only</b><small>Draw the riding line</small></button>
-            <button type="button" data-m="fill" role="radio" aria-checked="false"><b>Fill in</b><small>Draw the whole area</small></button>
+            <button type="button" class="on" data-m="track" role="radio" aria-checked="true"><b>Track only</b><small>Line × width</small></button>
+            <button type="button" data-m="fill" role="radio" aria-checked="false"><b>Fill in</b><small>Surface inside the loop</small></button>
           </div>
           <p class="mode-note" id="modeNote">Only the riding line is surfaced: length × width.</p>
           <div class="width-row" id="widthRow">

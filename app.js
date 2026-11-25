@@ -32,72 +32,102 @@
   // deep link from area pages: ?lat=&lng=&place=
   const qs = new URLSearchParams(location.search);
   const qLat = parseFloat(qs.get('lat')), qLng = parseFloat(qs.get('lng'));
-  const groups = { track: new L.FeatureGroup(), fill: new L.FeatureGroup() };
+  // ONE shared drawing: closed loops are stored as L.polygon, open lines as L.polyline.
+  // The build type only changes how the same shapes are styled and priced.
+  const shapes = new L.FeatureGroup().addTo(map);
   const bands = new L.FeatureGroup().addTo(map);   // surfaced band preview for track mode
-  const lineStyle = { color: '#d9ff5b', weight: 2, opacity: .95, dashArray: '4 6' };
+  const lineStyle = { color: '#d9ff5b', weight: 2, opacity: .95, dashArray: '4 6', fill: false };
   const bandStyle = { color: '#d9ff5b', weight: 1, fillColor: '#d9ff5b', fillOpacity: .55, interactive: false };
-  const fillStyle = { color: '#d9ff5b', weight: 3, fillColor: '#d9ff5b', fillOpacity: .35 };
+  const fillStyle = { color: '#d9ff5b', weight: 3, opacity: 1, dashArray: null, fill: true, fillColor: '#d9ff5b', fillOpacity: .35 };
+  const openInFill = { color: '#ffffff', weight: 2, opacity: .9, dashArray: '4 6', fill: false };
   state.mode = 'track'; state.width = 1.5;
-  groups.track.addTo(map);
-  const active = () => groups[state.mode];
+  const active = () => shapes;
+  const isClosed = l => l instanceof L.Polygon;
+  const ringOf = l => { let ll = l.getLatLngs(); while (Array.isArray(ll[0])) ll = ll[0]; return ll; };
+  function styleShapes() { shapes.eachLayer(l => l.setStyle(state.mode === 'track' ? lineStyle : (isClosed(l) ? fillStyle : openInFill))); }
   let pin = null, drawer = null, editor = null, lenLabel = null;
 
   const drawBtn = $('#drawBtn'), finishBtn = $('#finishBtn'), editBtn = $('#editBtn'), resetBtn = $('#resetBtn'), hint = $('#mapHint');
-  const drawLabel = () => state.mode === 'track'
-    ? (active().getLayers().length ? '<span>＋</span> Add line' : '<span>✎</span> Draw track')
-    : (active().getLayers().length ? '<span>＋</span> Add area' : '<span>✎</span> Draw area');
-  const idleHint = () => state.mode === 'track'
-    ? 'Tap <b>Draw track</b> and click along the riding line · press <b>Finish</b> (or double-click) to end · end on the start to close a loop'
-    : 'Tap <b>Draw area</b> and click around the whole area to surface · click the <b>first point</b> to finish';
+  const drawLabel = () => shapes.getLayers().length ? '<span>＋</span> Add line' : '<span>✎</span> Draw track';
+  const idleHint = () => 'Tap <b>Draw track</b> and click along the riding line · click the <b>start point</b> to close a loop, or <b>Finish</b> to leave it open';
+  const closeBtn = $('#closeBtn');
 
   function startDraw() {
     if (editor) stopEdit();
     if (drawer && drawer.enabled()) { drawer.disable(); return; }
     const icon = new L.DivIcon({ iconSize: new L.Point(12, 12), className: 'leaflet-div-icon leaflet-editing-icon' });
-    drawer = state.mode === 'track'
-      ? new L.Draw.Polyline(map, { shapeOptions: lineStyle, guidelineDistance: 10, showLength: true, metric: true, icon })
-      : new L.Draw.Polygon(map, { allowIntersection: false, showArea: false, shapeOptions: fillStyle, guidelineDistance: 12, icon });
+    drawer = new L.Draw.Polyline(map, { shapeOptions: lineStyle, guidelineDistance: 10, showLength: true, metric: true, icon });
     drawer.enable();
     drawBtn.classList.add('on'); drawBtn.innerHTML = '<span>✕</span> Cancel';
-    finishBtn.hidden = state.mode !== 'track';
-    hint.innerHTML = state.mode === 'track'
-      ? 'Click along the riding line · press <b>Finish</b> or double-click to end · end on the start to close a loop'
-      : 'Click around the area · click the <b>first point</b> to finish';
+    finishBtn.hidden = false; closeBtn.hidden = true;
+    hint.innerHTML = 'Click along the riding line · click the <b>start point</b> to close a loop, or press <b>Finish</b> / double-click to leave it open';
   }
   finishBtn.onclick = () => { if (drawer && drawer.enabled() && drawer.completeShape) { if ((drawer._markers || []).length >= 2) drawer.completeShape(); else toast('Add at least two points first.'); } };
-  map.on(L.Draw.Event.DRAWSTOP, () => { drawBtn.classList.remove('on'); drawBtn.innerHTML = drawLabel(); finishBtn.hidden = true; });
-  map.on(L.Draw.Event.CREATED, e => { if (state.mode === 'track') snapLoop(e.layer); active().addLayer(e.layer); afterChange(); });
+  map.on(L.Draw.Event.DRAWSTOP, () => { drawBtn.classList.remove('on'); drawBtn.innerHTML = drawLabel(); finishBtn.hidden = true; setTimeout(() => { if (state.mode === 'fill') recalc(); }, 0); });
+  map.on(L.Draw.Event.CREATED, e => { shapes.addLayer(snapLoop(e.layer)); styleShapes(); afterChange(); });
+  // clicking the start point while drawing closes the loop
+  map.on('draw:drawvertex', () => {
+    const mk = drawer && drawer._markers;
+    if (!mk || mk.length !== 3) return;
+    mk[0].off('click', closeFromDraw).on('click', closeFromDraw);
+    mk[0].getElement() && mk[0].getElement().classList.add('start-pt');
+  });
+  function closeFromDraw(ev) {
+    if (ev) L.DomEvent.stop(ev);
+    if (!drawer || !drawer.enabled() || drawer._markers.length < 3) return;
+    const ll = drawer._markers.map(m => m.getLatLng());
+    drawer.disable();
+    shapes.addLayer(L.polygon(ll, lineStyle)); styleShapes(); afterChange();
+  }
 
+  // a line that ends within 3 m of its start becomes a closed loop (polygon)
   function snapLoop(layer) {
     const ll = layer.getLatLngs();
-    if (ll.length > 2 && ll[0].distanceTo(ll[ll.length - 1]) < 3) { ll[ll.length - 1] = ll[0]; layer.setLatLngs(ll); }
+    if (ll.length > 3) {
+      const px = map.latLngToContainerPoint(ll[0]).distanceTo(map.latLngToContainerPoint(ll[ll.length - 1]));
+      if (ll[0].distanceTo(ll[ll.length - 1]) < 3 || px < 14) return L.polygon(ll.slice(0, -1), lineStyle);
+    }
+    return layer;
   }
+  function closeShape() {
+    endInteractions();
+    const open = shapes.getLayers().filter(l => !isClosed(l) && l.getLatLngs().length >= 3);
+    if (!open.length) { toast('Draw at least three points to make a closed shape.'); return; }
+    const l = open.reduce((m, x) => (ringLen(x) > ringLen(m) ? x : m));
+    shapes.removeLayer(l); shapes.addLayer(L.polygon(l.getLatLngs(), lineStyle));
+    hint.innerHTML = 'Shape closed — the loop now joins its last point back to the first. <b>Edit</b> to adjust.';
+    syncButtons(); recalc();
+  }
+  const ringLen = l => { const r = ringOf(l); let d = 0; for (let i = 1; i < r.length; i++) d += r[i - 1].distanceTo(r[i]); return d; };
+  closeBtn.onclick = closeShape;
   function syncButtons() {
     const n = active().getLayers().length;
     editBtn.disabled = !n; resetBtn.disabled = !n; drawBtn.innerHTML = drawLabel();
   }
   function afterChange() {
     syncButtons();
-    if (active().getLayers().length) hint.innerHTML = state.mode === 'track'
-      ? 'Track drawn. <b>Add line</b> for more segments, adjust the width, or <b>Edit</b> to drag points.'
-      : 'Area drawn. <b>Add area</b> for another patch, or <b>Edit</b> to drag corners.';
+    if (shapes.getLayers().length) hint.innerHTML = state.mode === 'track'
+      ? 'Track drawn. <b>Add line</b> for more segments, adjust the width, or switch to <b>Fill in</b> — no redraw needed.'
+      : 'Shape drawn. Switch to <b>Track only</b> any time — no redraw needed, or <b>Edit</b> to drag points.';
     recalc();
   }
-  function stopEdit() { if (editor) { editor.save(); editor.disable(); editor = null; } editBtn.classList.remove('on'); editBtn.innerHTML = '<span>⤧</span> Edit'; recalc(); }
+  function stopEdit() { if (editor) { editor.save(); editor.disable(); editor = null; } editBtn.classList.remove('on'); editBtn.innerHTML = '<span>⤧</span> Edit'; styleShapes(); recalc(); }
   editBtn.onclick = () => {
     if (!active().getLayers().length) return;
     if (editor) { stopEdit(); hint.innerHTML = 'Saved. Adjust the surface or book a site visit.'; return; }
     if (drawer && drawer.enabled()) drawer.disable();
     const sty = state.mode === 'track' ? { ...lineStyle, dashArray: null } : { ...fillStyle, dashArray: '6 6' };
+    closeBtn.hidden = true;
     editor = new L.EditToolbar.Edit(map, { featureGroup: active(), selectedPathOptions: { ...sty, maintainColor: true } });
     editor.enable();
+    if (state.mode === 'fill') shapes.eachLayer(l => { if (!isClosed(l)) l.setStyle(openInFill); });
     editBtn.classList.add('on'); editBtn.innerHTML = '<span>✓</span> Done';
     hint.innerHTML = 'Drag the white points · drag a midpoint to add one · press <b>Done</b>';
   };
   map.on('draw:editvertex draw:editmove', () => recalc());
   function endInteractions() {
     if (drawer && drawer.enabled()) drawer.disable();
-    if (editor) { editor.save(); editor.disable(); editor = null; editBtn.classList.remove('on'); editBtn.innerHTML = '<span>⤧</span> Edit'; }
+    if (editor) { editor.save(); editor.disable(); editor = null; editBtn.classList.remove('on'); editBtn.innerHTML = '<span>⤧</span> Edit'; styleShapes(); }
   }
   function clearShape(silent) {
     endInteractions();
@@ -126,10 +156,10 @@
     if (b.dataset.m === state.mode) return;
     endInteractions();
     document.querySelectorAll('#modeSeg button').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-checked', x === b); });
-    map.removeLayer(active()); state.mode = b.dataset.m; active().addTo(map);
+    state.mode = b.dataset.m; styleShapes();
     widthRow.classList.toggle('collapsed', state.mode !== 'track');
     $('#modeNote').textContent = state.mode === 'track' ? 'Only the riding line is surfaced: length × width.' : 'The whole drawn area is surfaced, including the infield.';
-    syncButtons(); hint.innerHTML = active().getLayers().length ? 'Switched build type — showing your ' + (state.mode === 'track' ? 'track line.' : 'fill-in area.') : idleHint();
+    syncButtons(); hint.innerHTML = shapes.getLayers().length ? 'Switched to <b>' + (state.mode === 'track' ? 'Track only' : 'Fill in') + '</b> — same drawing, re-priced.' : idleHint();
     recalc();
   });
 
@@ -154,30 +184,35 @@
   }
   function recalc() {
     bands.clearLayers();
-    state.length = 0; state.area = 0; state.segments = 0;
+    state.length = 0; state.area = 0; state.segments = 0; state.needsClose = false;
+    const all = shapes.getLayers().filter(l => ringOf(l).length >= 2);
+    const lineOf = l => { const r = ringOf(l).map(p => [p.lng, p.lat]); if (isClosed(l)) r.push(r[0]); return turf.lineString(r); };
     if (state.mode === 'track') {
-      const layers = groups.track.getLayers().filter(l => l.getLatLngs().length >= 2);
       let len = 0;
-      layers.forEach(l => {
-        const line = turf.lineString(l.getLatLngs().map(p => [p.lng, p.lat]));
+      all.forEach(l => {
+        const line = lineOf(l);
         len += turf.length(line, { units: 'kilometers' }) * 1000;
         try { L.geoJSON(turf.buffer(line, state.width / 2, { units: 'meters', steps: 8 }), { style: () => bandStyle, interactive: false }).addTo(bands); } catch (e) {}
       });
       bands.bringToBack();
-      state.length = Math.round(len); state.area = Math.round(len * state.width); state.segments = layers.length;
-      if (layers.length) { const ll = layers[layers.length - 1].getLatLngs(); setLabel(ll[Math.floor(ll.length / 2)], `${state.length.toLocaleString('en-NZ')} m · ${state.area.toLocaleString('en-NZ')} m²`); } else setLabel(null);
+      state.length = Math.round(len); state.area = Math.round(len * state.width); state.segments = all.length;
+      if (all.length) { const ll = ringOf(all[all.length - 1]); setLabel(ll[Math.floor(ll.length / 2)], `${state.length.toLocaleString('en-NZ')} m · ${state.area.toLocaleString('en-NZ')} m²`); } else setLabel(null);
+      closeBtn.hidden = true;
     } else {
-      const layers = groups.fill.getLayers();
-      let area = 0, c = null;
-      layers.forEach(l => {
-        let ll = l.getLatLngs(); while (Array.isArray(ll[0])) ll = ll[0];
-        if (ll.length < 3) return;
-        const ring = ll.map(p => [p.lng, p.lat]); ring.push(ring[0]);
-        const poly = turf.polygon([ring]); area += turf.area(poly);
-        const cc = turf.centroid(poly).geometry.coordinates; c = [cc[1], cc[0]];
+      const closed = all.filter(l => isClosed(l) && ringOf(l).length >= 3);
+      let area = 0, c = null, best = 0;
+      closed.forEach(l => {
+        const ring = ringOf(l).map(p => [p.lng, p.lat]); ring.push(ring[0]);
+        const poly = turf.polygon([ring]); const a = turf.area(poly); area += a;
+        if (a > best) { best = a; const cc = turf.centroid(poly).geometry.coordinates; c = [cc[1], cc[0]]; }
       });
-      state.area = Math.round(area); state.segments = layers.length;
+      state.area = Math.round(area); state.segments = closed.length;
+      const openCount = all.length - closed.length;
+      state.needsClose = all.length > 0 && !closed.length;
+      closeBtn.hidden = !(state.needsClose && all.some(l => ringOf(l).length >= 3)) || !!editor || !!(drawer && drawer.enabled());
       setLabel(state.area ? c : null, `${state.area.toLocaleString('en-NZ')} m²`);
+      if (state.needsClose) hint.innerHTML = 'Fill in needs a closed shape. Press <b>Close shape</b> to join the end back to the start — your line stays as drawn for Track only.';
+      else if (openCount && closed.length) hint.innerHTML = 'Filling the closed loop. Open lines inside it are already covered by the fill.';
     }
     render();
   }
@@ -190,7 +225,7 @@
   function render() {
     const has = state.area > 0;
     $('#estEmpty').hidden = has; $('#estFilled').hidden = !has;
-    $('#emptyText').textContent = state.mode === 'track' ? 'Draw the track line on the map to see your estimate.' : 'Draw the area to surface on the map to see your estimate.';
+    $('#emptyText').textContent = state.mode === 'track' ? 'Draw the track line on the map to see your estimate.' : (state.needsClose ? 'Your line is open — close the shape to price a fill in. Switch back to Track only to price it as drawn.' : 'Draw a closed loop on the map to see your fill-in estimate.');
     if (!has) { state.low = state.high = 0; animFrom.main = 0; updateSummary(); return; }
     const a = state.area, len = state.length, track = state.mode === 'track';
     state.low = round(a * RATE_LOW, 1000); state.high = round(a * RATE_HIGH, 1000);
@@ -204,7 +239,7 @@
     $('#outSurface').textContent = state.surface;
     $('#outCalc').textContent = track ? `${len.toLocaleString('en-NZ')} m × ${state.width.toFixed(1)} m = ${a.toLocaleString('en-NZ')} m² surfaced` : 'Whole area surfaced (fill in)';
     $('#outBuild').textContent = track ? 'Track only' : 'Fill in';
-    $('#outWidthLbl').textContent = track ? 'Track width' : 'Areas drawn';
+    $('#outWidthLbl').textContent = track ? 'Track width' : 'Loops filled';
     $('#outWidth').textContent = track ? `${state.width.toFixed(1)} m` : String(state.segments);
     $('#outAreaLbl').textContent = track ? 'Surfaced area' : 'Approx. track line';
     $('#outArea').textContent = track ? `${a.toLocaleString('en-NZ')} m²` : `≈ ${round(a / 5, 5)}–${round(a / 3.5, 5)} m`;
@@ -284,12 +319,9 @@
     const mLat = 111320, mLon = 111320 * Math.cos(c[0] * Math.PI / 180);
     const pt = (x, y) => [c[0] + y / mLat, c[1] + x / mLon];
     const loop = []; for (let i = 0; i <= 24; i++) { const t = i / 24 * Math.PI * 2; loop.push(pt(19 * Math.cos(t), 12 * Math.sin(t))); }
-    if (state.mode === 'track') {
-      groups.track.addLayer(L.polyline(loop, lineStyle));
-      groups.track.addLayer(L.polyline([pt(-19, 0), pt(-6, 4), pt(6, -4), pt(19, 0)], lineStyle));
-    } else {
-      groups.fill.addLayer(L.polygon(loop.slice(0, -1), fillStyle));
-    }
+    shapes.addLayer(L.polygon(loop.slice(0, -1), lineStyle));
+    shapes.addLayer(L.polyline([pt(-19, 0), pt(-6, 4), pt(6, -4), pt(19, 0)], lineStyle));
+    styleShapes();
     map.flyTo(c, 19, { duration: 1.4 });
     afterChange();
   };
